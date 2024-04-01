@@ -1,4 +1,6 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Surfingpage
+
+个人搜索页面，基于Next.js和shadcn/ui开发，暂时比较忙，有时间再来写文档。
 
 ## Getting Started
 

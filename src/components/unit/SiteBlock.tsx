@@ -15,7 +15,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog'
-import { useEffect, useMemo, useState } from 'react';
+import { use, useEffect, useMemo, useState } from 'react';
 import { DialogClose } from '@radix-ui/react-dialog';
 import {
     Tooltip,
@@ -39,7 +39,7 @@ export default function SiteBlock(
 
     function clickSite(site: SiteType) {
         if (inputValue !== '') {
-            window.open(site.searchStr.replace('%s', inputValue))
+            site.searchStr === '' ? window.open(site.homeUrl) : window.open(site.searchStr.replace('%s', inputValue))
         } else {
             window.open(site.homeUrl)
         }
@@ -55,10 +55,10 @@ export default function SiteBlock(
     })
 
 
-    const showInactive = useMemo(() => {
-        let showInactive = inputValue !== '' && site.searchStr === ''
-        return showInactive
-    }, [inputValue])
+    const [showInactive, setShowInactive] = useState(false)
+    useEffect(() => {
+        setShowInactive(inputValue !== '' && site.searchStr === '')
+    }, [inputValue, site.searchStr])
 
 
     const siteFavorate = useMemo(() => {
@@ -81,10 +81,10 @@ export default function SiteBlock(
         <>
             <Dialog>
                 <ContextMenu>
-                    <ContextMenuTrigger className={"px-2 py-1 border rounded-lg transition-all hover:text-primary hover:border-primary " + (showInactive ? 'opacity-20 cursor-not-allowed' : '')}>
+                    <ContextMenuTrigger className={"px-2 py-1 border rounded-lg transition-all " + (!showInactive ? 'hover:text-primary hover:border-primary ' : '') + (showInactive ? 'opacity-20' : '')}>
                         <TooltipProvider>
                             <Tooltip>
-                                <TooltipTrigger className={showInactive ? ' cursor-not-allowed' : ''}>
+                                <TooltipTrigger className={showInactive ? ' cursor-default' : ''}>
                                     <span onClick={(e) => {
                                         clickSite(site)
                                     }}>

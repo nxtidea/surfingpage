@@ -171,7 +171,6 @@ export default function Main() {
 
 
     function sitesReducer(state: SiteType[], action: { type: string; payload: any }) {
-        console.log(state, action);
         switch (action.type) {
             case "add":
                 return [...state, action.payload];
@@ -272,9 +271,16 @@ export default function Main() {
             </ContextMenu>
             <div className="mb-8 flex justify-center w-full">
                 <MyInput
-                    className="w-2/3 transition-all duration-300 text-center focus:w-4/5 focus:text-lg outline-none focus:shadow dark:shadow-gray-900"
+                    className="w-2/3 transition-all duration-300 text-center focus:scale-110 focus:text-lg focus:border-primary outline-none focus:shadow dark:shadow-gray-900"
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                            e.preventDefault();
+                            window.open(`https://www.google.com/search?q=${inputValue}`);
+                            setInputValue("");
+                        }
+                    }}
                 />
             </div>
             <div className="my-8">
